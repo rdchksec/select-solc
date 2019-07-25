@@ -1,0 +1,20 @@
+#!/bin/bash
+
+if [ "$#" -ne 1 ]; then
+    echo "Usage:"
+    echo "-v select version of solc"
+    echo "example: select-solc 0.4.24"
+    exit 1
+fi
+
+VERSION=$1
+
+SOLC_PATH=/usr/bin/solc-v$VERSION
+
+if [ ! -f /usr/bin/solc-v$VERSION ]; then
+    curl -s -f -L "https://github.com/ethereum/solidity/releases/download/v$VERSION/solc-static-linux" -o "/usr/bin/solc-v$VERSION"
+    chmod +x "/usr/bin/solc-v$VERSION"
+    echo "solc-v${VERSION} is installed"
+fi
+
+ln -fs /usr/bin/solc-v$VERSION /usr/bin/solc
